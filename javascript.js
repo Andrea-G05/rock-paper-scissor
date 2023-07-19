@@ -111,6 +111,10 @@ function playGame (){
 		}else{
 			scorePara.textContent += " | No Winners"
 		}
+
+		buttons.forEach(button => {
+			button.removeEventListener("click",playGame)
+		})
 	}
 }
 
