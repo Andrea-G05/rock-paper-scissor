@@ -75,34 +75,51 @@ function playRound (playerSelection, computerSelection) {
 	}
 }
 
-
-
-/*
-function game(numRounds){
-	for (let i = 0; i < numRounds; i++){
-
-		computerSelection = getComputerChoice();
-		playerSelection = prompt("Choose your move!");
-		playerSelection = playerSelection.slice(0,1).toUpperCase() + playerSelection.slice(1).toLowerCase();
-
-		console.log("You chose " + playerSelection)
-		console.log("Computer chose " + computerSelection);
-
-		result = playRound(playerSelection, computerSelection);
-		console.log(result);
- }
-}
-*/
-
-function printRound(){
+function printRound(playerChoice){
+	let result = playRound(playerChoice, getComputerChoice());
 	const para = document.createElement("p");
-	para.textContent = playRound(this.dataset.rps, getComputerChoice());
+	para.textContent = result;
 	document.querySelector(".resultContainer").appendChild(para);
+	
+	return result;
 }
+
+function playGame (){
+	switch (printRound(this.dataset.rps).slice(0,5)){
+		case "You W":
+			winCounter++;
+			roundCounter++
+			break;
+		case "You L":
+			loseCounter++;
+			roundCounter++
+			break;
+		default:
+			roundCounter++;
+			break;
+	};
+
+	const scorePara = document.querySelector(".gameScore")
+	scorePara.textContent = `Won ${winCounter} | Lost ${loseCounter}`
+
+	if(roundCounter >= 5){
+		scorePara.textContent += " | Game Ended "
+		if(winCounter > loseCounter){
+			scorePara.textContent += " | You Win"
+		}else if (winCounter < loseCounter){
+			scorePara.textContent += " | You Lose"
+		}else{
+			scorePara.textContent += " | No Winners"
+		}
+	}
+}
+
 
 let roundCounter = 0;
+let winCounter = 0;
+let loseCounter = 0;
 
 const buttons = document.querySelectorAll("button");
 buttons.forEach(button => {
-	button.addEventListener("click",printRound)
+	button.addEventListener("click",playGame)
 })
