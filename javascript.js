@@ -76,6 +76,8 @@ function playRound (playerSelection, computerSelection) {
 }
 
 
+
+/*
 function game(numRounds){
 	for (let i = 0; i < numRounds; i++){
 
@@ -90,5 +92,17 @@ function game(numRounds){
 		console.log(result);
  }
 }
+*/
 
-game(5);
+function printRound(){
+	const para = document.createElement("p");
+	para.textContent = playRound(this.dataset.rps, getComputerChoice());
+	document.querySelector(".resultContainer").appendChild(para);
+}
+
+let roundCounter = 0;
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {
+	button.addEventListener("click",printRound)
+})
